@@ -1,7 +1,4 @@
-require 'sinatra'
-require 'sinatra/base'
-
-Dir.glob('./app/{helpers,controllers}/*.rb').each { |file| require file; puts "require #{ file }" }
+require ::File.expand_path('../config/application',  __FILE__)
 
 configure do
   # убраны гласные, чтобы short url не был словом
