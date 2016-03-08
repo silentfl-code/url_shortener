@@ -1,5 +1,3 @@
-require 'sinatra'
-
 # убраны гласные, чтобы short url не был словом
 # убраны похожие буквы i~l
 ABC = "123456789bcdfghjkmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"
