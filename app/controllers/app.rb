@@ -1,23 +1,58 @@
 class App < Sinatra::Base
-  helpers Storage
+  helpers AppHelper
 
   get '/' do
     slim :new
   end
 
-  get '/:hash' do
-    long_url = find_by(short_url: params[:hash]) #TODO нужна валидация входных данных
-    if long_url.nil?
-      redirect long_url, 301
+  post '/items/new' do
+    short_url = get_key
+    @item = Item.new(short_url: short_url,
+                        long_url: params[:long_url])
+    if @item.valid?
+      @item.save!
+      slim :success
     else
-      not_found()
+      slim :new, locals: { error_message: "invalid url" }
     end
   end
 
-  post '/' do
-    short_url = find_by(long_url: params[:q])  #TODO валидация
-    short_url = add_url(params[:q]) if short_url.nil?
-    "#{ settings.domain }#{ short_url }"
+  get '/items' do
+    @items = Item.all
+    slim :list
+  end
+
+  get '/items/:slug' do
+    @item = Item.where(short_url: params[:slug]).first
+    if item.nil?
+      not_found()
+    else
+      redirect item.long_url, 301
+    end
+  end
+
+  get '/items/:slug/edit' do
+    @item = Item.where(short_url: params[:slug]).first
+    if @item.nil?
+      not_found()
+    else
+      slim :edit
+    end
+  end
+
+  post '/items/:slug' do
+    @item = Item.where(short_url: params[:slug]).first
+    if @item.update_attributes(short_url: params[:short_url], long_url: params[:long_url])
+      redirect '/items'
+    else
+      erb :edit, locals:  { error_message: "invalid url" }
+    end
+  end
+
+  post '/items/:slug/destroy' do
+    @item = Item.where(short_url: params[:slug]).first
+    @item.destroy
+    redirect '/items'
   end
 
   not_found do

@@ -1,3 +1,6 @@
-form method='post' action='new'
+- if locals[:error_message]
+  .error-message= locals[:error_message]
+
+form method='post' action='/items/new'
   input type='text' name='long_url'
   input type='submit' value='short!'

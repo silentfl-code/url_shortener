@@ -1,0 +1,9 @@
+- if locals[:error_message]
+  .error-message= locals[:error_message]
+
+form method='post' action="/items/#{@item.short_url}"
+  label for="short_url" Короткий адрес:
+  input type='text' name='short_url' value="#{@item.short_url}"
+  label for="short_url" Длинный адрес:
+  input type='text' name='long_url' value="#{@item.long_url}"
+  input type='submit' value='Save'

@@ -1,0 +1,8 @@
+ul
+  - @items.each do |item|
+    li
+      span= item.pretty_short_url
+      span= item.long_url
+      a href="/items/#{item.short_url}/edit" Edit
+      form action="/items/#{item.short_url}/destroy" method="POST"
+        input type="submit" name="commit" value="Delete"
