@@ -31,10 +31,14 @@ GEM
       rack (~> 1.5)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
+    slim (3.0.6)
+      temple (~> 0.7.3)
+      tilt (>= 1.3.3, < 2.1)
     squeel (1.2.3)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
       polyamorous (~> 1.1.0)
+    temple (0.7.6)
     thread_safe (0.3.5)
     tilt (2.0.2)
     tzinfo (1.2.2)
@@ -50,6 +54,7 @@ DEPENDENCIES
   puma
   rake
   sinatra
+  slim
   squeel
 
 BUNDLED WITH

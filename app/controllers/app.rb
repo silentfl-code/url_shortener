@@ -1,8 +1,8 @@
 class App < Sinatra::Base
   helpers Storage
-  # для просмотра что есть в "базе"
-  get '/stat' do
-    puts @@short_to_long
+
+  get '/' do
+    slim :new
   end
 
   get '/:hash' do
