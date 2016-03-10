@@ -1,4 +1,5 @@
 class App < Sinatra::Base
+  register Sinatra::Logger
   helpers AppHelper
 
   get '/' do
@@ -22,12 +23,21 @@ class App < Sinatra::Base
     slim :list
   end
 
+  before '/items/:slug' do
+    logger.info({
+        id: params[:slug], #ID ссылки
+        #country: 
+        ua: request.user_agent,
+        time: Time.now,
+    })
+  end
+
   get '/items/:slug' do
     @item = Item.where(short_url: params[:slug]).first
-    if item.nil?
+    if @item.nil?
       not_found()
     else
-      redirect item.long_url, 301
+      redirect @item.long_url, 301
     end
   end
 
