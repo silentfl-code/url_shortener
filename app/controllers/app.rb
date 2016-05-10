@@ -7,9 +7,8 @@ class App < Sinatra::Base
   end
 
   post '/items/new' do
-    short_url = get_key
-    @item = Item.new(short_url: short_url,
-                        long_url: params[:long_url])
+    short_url = key
+    @item = Item.new short_url: short_url, long_url: params[:long_url]
     if @item.valid?
       @item.save!
       slim :success
@@ -24,18 +23,16 @@ class App < Sinatra::Base
   end
 
   before '/items/:slug' do
-    logger.info({
-        id: params[:slug], #ID ссылки
-        #country: 
-        ua: request.user_agent,
-        time: Time.now,
-    })
+    logger.info id: params[:slug],
+                # country:
+                ua: request.user_agent,
+                time: Time.now
   end
 
   get '/items/:slug' do
     @item = Item.where(short_url: params[:slug]).first
     if @item.nil?
-      not_found()
+      not_found
     else
       redirect @item.long_url, 301
     end
@@ -44,7 +41,7 @@ class App < Sinatra::Base
   get '/items/:slug/edit' do
     @item = Item.where(short_url: params[:slug]).first
     if @item.nil?
-      not_found()
+      not_found
     else
       slim :edit
     end

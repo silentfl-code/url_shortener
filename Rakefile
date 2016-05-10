@@ -3,9 +3,6 @@ require 'rspec/core/rake_task'
 
 require ::File.expand_path('../config/application', __FILE__)
 
-# Include all of ActiveSupport's core class extensions, e.g., String#camelize
-#require 'active_support/core_ext'
-
 namespace :db do
   desc "Create the database at #{DB_NAME}"
   task :create do
@@ -19,7 +16,7 @@ namespace :db do
     exec("dropdb #{DB_NAME}")
   end
 
-  desc "Migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog)."
+  desc 'Migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog).'
   task :migrate do
     ActiveRecord::Migrator.migrations_paths << File.dirname(__FILE__) + 'db/migrate'
     ActiveRecord::Migration.verbose = ENV["VERBOSE"] ? ENV["VERBOSE"] == "true" : true
@@ -39,4 +36,4 @@ namespace :db do
   end
 end
 
-task :default  => :specs
+task :default => :specs

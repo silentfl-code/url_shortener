@@ -27,11 +27,6 @@ class App
     set :root, Pathname.new(File.expand_path('../../', __FILE__)).to_s
     set :views, File.join(root, "app", "views")
 
-    #enable :logging
-    #log = File.new("#{settings.root}/log/#{settings.environment}.log", 'a+')
-    #log.sync = true
-    #use Rack::CommonLogger, log
-
-    set :logger_log_file, lambda { "#{settings.root}/log/#{settings.environment}.log" }
+    set :logger_log_file, -> { "#{settings.root}/log/#{settings.environment}.log" }
   end
 end
